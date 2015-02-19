@@ -23,7 +23,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier(HOME_TIMELINE_CELL) as! UITableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier(HOME_TIMELINE_CELL) as! HomeTimelineCell
         
         return cell
     }
