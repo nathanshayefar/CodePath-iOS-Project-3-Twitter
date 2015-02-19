@@ -1,1 +1,2 @@
-pod 'Parse'
+pod 'AFNetworking'
+pod 'BDBOAuth1Manager'

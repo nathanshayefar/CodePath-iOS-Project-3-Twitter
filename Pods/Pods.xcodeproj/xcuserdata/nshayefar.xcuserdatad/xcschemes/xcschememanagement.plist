@@ -4,12 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-Bolts.xcscheme</key>
+		<key>Pods-AFNetworking.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-Parse.xcscheme</key>
+		<key>Pods-BDBOAuth1Manager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,17 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2AA97C94F1FD8C10E9819029</key>
+		<key>10BBFAF1DFFA963B634CF308</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3AA00FC27FEE3E1553A46773</key>
+		<key>8B46159975280E683FFA9051</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>86BB1B5BEFB101129097C217</key>
+		<key>92B47D6E4F4462D8B777180C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
