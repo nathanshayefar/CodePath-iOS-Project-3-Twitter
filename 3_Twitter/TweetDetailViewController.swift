@@ -10,5 +10,13 @@ class TweetDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reply", style: .Plain, target: self, action: "onReply")
+        
+        // MARK: NavigationItem
+        
+        func onReply() {
+            println("onReply")
+        }
     }
 }

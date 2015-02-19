@@ -7,6 +7,7 @@
 //
 
 class HomeTimelineCell: UITableViewCell {
+    private let TWEET_DETAIL_SEGUE = "TweetDetailSegue"
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -14,5 +15,7 @@ class HomeTimelineCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        
+        
     }
 }

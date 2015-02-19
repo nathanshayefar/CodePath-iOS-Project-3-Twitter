@@ -10,5 +10,18 @@ class ComposeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "onCancel")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Tweet", style: .Plain, target: self, action: "onTweet")
+        
+        // MARK: NavigationItem
+        
+        func onCancel() {
+            println("onCancel")
+        }
+        
+        func onTweet() {
+            println("onTweet")
+        }
     }
 }
