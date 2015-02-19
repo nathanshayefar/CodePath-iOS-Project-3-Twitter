@@ -7,7 +7,7 @@
 //
 
 class TwitterClient: BDBOAuth1RequestOperationManager {
-    private static let API_URL = NSURL(string: "http://api.twitter.com/")
+    private let API_URL = NSURL(string: "http://api.twitter.com/")
     
     var accessToken: String!
     var accessSecret: String!
@@ -19,7 +19,7 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     init(consumerKey key: String!, consumerSecret secret: String!, accessToken: String!, accessSecret: String!) {
         self.accessToken = accessToken
         self.accessSecret = accessSecret
-        super.init(baseURL: API_URL, consumerKey: key, consumerSecret: secret);
+        super.init(baseURL: self.API_URL, consumerKey: key, consumerSecret: secret);
         
         var token = BDBOAuth1Credential(token: accessToken, secret: accessSecret, expiration: nil)
         self.requestSerializer.saveAccessToken(token)
