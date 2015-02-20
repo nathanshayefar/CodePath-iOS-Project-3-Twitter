@@ -41,6 +41,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        
+//        TwitterClient.sharedInstance.fetchAccessTokenWithPath("oauth/access_token", method: "POST", requestToken: <#BDBOAuth1Credential!#>, success: <#((BDBOAuth1Credential!) -> Void)!##(BDBOAuth1Credential!) -> Void#>, failure: <#((NSError!) -> Void)!##(NSError!) -> Void#>)
+        return true
+    }
 
 }
 

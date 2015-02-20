@@ -7,26 +7,44 @@
 //
 
 class TwitterClient: BDBOAuth1RequestOperationManager {
-    private let API_URL = NSURL(string: "http://api.twitter.com/")
+    private static let consumerKey = ""
+    private static let consumerSecret = ""
+    private static let apiUrl = NSURL(string: "http://api.twitter.com")
+    private static let callbackUrl = NSURL(string: "oauth/request_token")
+    private static let authUrlString = "https://api.twitter.com/oauth/authorize?oauth_token="
     
-    var accessToken: String!
-    var accessSecret: String!
+    class var sharedInstance: TwitterClient {
+        struct Static {
+            static let instance = TwitterClient()
+        }
+        
+        return Static.instance
+    }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    init(consumerKey key: String!, consumerSecret secret: String!, accessToken: String!, accessSecret: String!) {
-        self.accessToken = accessToken
-        self.accessSecret = accessSecret
-        super.init(baseURL: self.API_URL, consumerKey: key, consumerSecret: secret);
-        
-        var token = BDBOAuth1Credential(token: accessToken, secret: accessSecret, expiration: nil)
-        self.requestSerializer.saveAccessToken(token)
+    init() {
+        super.init(baseURL: TwitterClient.apiUrl, consumerKey: TwitterClient.consumerKey, consumerSecret: TwitterClient.consumerSecret);
     }
     
-    func searchWithParameters(parameters: [String : String], success: (AFHTTPRequestOperation!, AnyObject!) -> Void, failure: (AFHTTPRequestOperation!, NSError!) -> Void) -> AFHTTPRequestOperation! {
+    func requestAccessToken() {
+        requestSerializer.removeAccessToken()
         
-        return self.GET("search", parameters: parameters, success: success, failure: failure)
+        fetchRequestTokenWithPath(
+            "oauth/request_token",
+            method: "GET",
+            callbackURL: TwitterClient.callbackUrl,
+            scope: nil,
+            success: { (requestToken: BDBOAuth1Credential!) -> Void in
+                println("Successfully received requestToken")
+                
+                var authURL = NSURL(string: TwitterClient.authUrlString + requestToken.token)!
+                UIApplication.sharedApplication().openURL(authURL)
+                
+            }) { (error: NSError!) -> Void in
+                println("Failed to receive requestToken: \(error.description)")
+        }
     }
 }
