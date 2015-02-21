@@ -7,6 +7,13 @@
 //
 
 class HomeTimelineCell: UITableViewCell {
+    @IBOutlet weak var profileImageView: UIImageView!
+    
+    @IBOutlet weak var realNameLabel: UILabel!
+    @IBOutlet weak var screenNameLabel: UILabel!
+    @IBOutlet weak var timestampLabel: UILabel!
+    @IBOutlet weak var bodyLabel: UILabel!
+    
     private let TWEET_DETAIL_SEGUE = "TweetDetailSegue"
 
     override func awakeFromNib() {
@@ -18,13 +25,13 @@ class HomeTimelineCell: UITableViewCell {
     }
     
     func setTweet(tweet: Tweet) {
-        let user = tweet.user
-        
-        let a = user?.name
-        let c = user?.screenName
-        let b = user?.profileImageUrl
-        
-        let x = tweet.createdAtString
-        let y = tweet.text
+        let user = tweet.user!
+            
+        realNameLabel.text = user.name
+        screenNameLabel.text = user.screenName
+        profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!))
+            
+        timestampLabel.text = tweet.createdAtString
+        bodyLabel.text = tweet.text
     }
 }

@@ -11,8 +11,17 @@ import UIKit
 class LoginViewController: UIViewController {
     private let loginSegueId = "loginSegue"
 
+    @IBOutlet weak var loginButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = Color.secondaryColor
+        
+        self.loginButton.backgroundColor = Color.primaryColor
+        self.loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.loginButton.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
+        self.loginButton.layer.cornerRadius = 3
     }
 
     @IBAction func onLogin(sender: AnyObject) {

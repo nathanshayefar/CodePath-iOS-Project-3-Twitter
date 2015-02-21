@@ -20,9 +20,10 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.estimatedRowHeight = 85
         
         self.navigationItem.title = "Home"
-        navigationController?.navigationBar.barTintColor = UIColor.blueColor()
+        navigationController?.navigationBar.barTintColor = UIColor.grayColor()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .Plain, target: self, action: "onSignOutButton")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .Plain, target: self, action: "onNewButton")
         
@@ -35,7 +36,11 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: TableView
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        if let count = tweets?.count {
+            return count
+        } else {
+            return 0
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -45,6 +50,10 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier(homeTimelineCellId, forIndexPath: indexPath) as! HomeTimelineCell
+        
+        if let tweet = self.tweets?[indexPath.row] {
+            cell.setTweet(tweet)
+        }
         
         return cell
     }
