@@ -20,6 +20,15 @@ class HomeTimelineCell: UITableViewCell {
         super.awakeFromNib()
         
         self.backgroundColor = Color.secondaryColor
+        
+        self.profileImageView.layer.cornerRadius = 3
+        self.profileImageView.clipsToBounds = true
+        self.bodyLabel.preferredMaxLayoutWidth = self.bodyLabel.frame.size.width
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.bodyLabel.preferredMaxLayoutWidth = self.bodyLabel.frame.size.width
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -30,7 +39,8 @@ class HomeTimelineCell: UITableViewCell {
         let user = tweet.user!
             
         realNameLabel.text = user.name
-        screenNameLabel.text = user.screenName
+        screenNameLabel.text = "@\(user.screenName!)"
+        println(user.profileImageUrl)
         profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!))
             
         timestampLabel.text = tweet.createdAtString

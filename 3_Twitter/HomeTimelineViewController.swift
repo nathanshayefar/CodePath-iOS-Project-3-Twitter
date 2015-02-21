@@ -21,6 +21,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 85
+        self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.backgroundColor = Color.secondaryColor
         
         self.navigationItem.title = "Home"
