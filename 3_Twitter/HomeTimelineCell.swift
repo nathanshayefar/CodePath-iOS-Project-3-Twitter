@@ -15,7 +15,16 @@ class HomeTimelineCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func setTweet(tweet: Tweet) {
+        let user = tweet.user
         
+        let a = user?.name
+        let c = user?.screenName
+        let b = user?.profileImageUrl
         
+        let x = tweet.createdAtString
+        let y = tweet.text
     }
 }

@@ -9,13 +9,23 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    private let loginSegueId = "loginSegue"
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
     @IBAction func onLogin(sender: AnyObject) {
-        TwitterClient.sharedInstance.getRequestToken()
+        TwitterClient.sharedInstance.loginWithCompletion() {
+            (user: User?, error: NSError?) in
+            
+            if  user != nil {
+                self.performSegueWithIdentifier(self.loginSegueId, sender: self)
+                // perform segue
+            } else {
+                // handle login error
+            }
+        }
     }
     
 }

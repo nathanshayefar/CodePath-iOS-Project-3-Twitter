@@ -12,11 +12,26 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var storyboard = UIStoryboard(name: "Main", bundle: nil)
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: userDidLogoutNotification, object: nil)
+        
+        if User.currentUser != nil {
+            // Go to logged-in screen
+            println("Current user detected: \(User.currentUser?.name)")
+            
+            var vc = storyboard.instantiateViewControllerWithIdentifier("LoggedInNavController") as! UIViewController
+            window?.rootViewController = vc
+        }
+        
         return true
+    }
+    
+    func userDidLogout() {
+        var vc = storyboard.instantiateInitialViewController() as! UIViewController
+        window?.rootViewController = vc
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -42,14 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-        TwitterClient.sharedInstance.getAccessToken(url)
-//        TwitterClient.sharedInstance.fetchAccessTokenWithPath("oauth/access_token", method: "POST", requestToken: BDBOAuth1Credential(queryString: url.query), success: { (accessToken: BDBOAuth1Credential!) ->
-//            Void in
-//                println("Successfully received accessToken.")
-//                TwitterClient.sharedInstance.requestSerializer.saveAccessToken(accessToken)
-//            }) { (error: NSError!) -> Void in
-//                println("Failed to receive accessToken.")
-//        }
+        TwitterClient.sharedInstance.openUrl(url)
         return true
     }
 

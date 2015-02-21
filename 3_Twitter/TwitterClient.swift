@@ -7,24 +7,39 @@
 //
 
 let twitterBaseUrl = NSURL(string: "https://api.twitter.com")
-let twiterConsumerKey = ""
-let twitterConsumerSecret = ""
+//let twiterConsumerKey = "pN6bfPJNYV64Hk6sdyEhGlrkk"
+//let twitterConsumerSecret = "QDJ6NR66XuoKHa10fY92DiKmz6f9lXVuXezNSvJo0CPPP773fV"
 let callbackUrl = NSURL(string: "nstwitter://oauth")
 let authUrlString = "https://api.twitter.com/oauth/authorize?oauth_token="
 
 class TwitterClient: BDBOAuth1RequestOperationManager {
     
+    var loginCompletion: ((user: User?, error: NSError?) -> ())?
+    
     class var sharedInstance: TwitterClient {
         struct Static {
-            static let instance = TwitterClient(baseURL: twitterBaseUrl, consumerKey: twiterConsumerKey, consumerSecret: twitterConsumerSecret)
+            static let instance = TwitterClient(baseURL: twitterBaseUrl, consumerKey: ApiKeys.twitterConsumerKey, consumerSecret: ApiKeys.twitterConsumerSecret)
         }
         
         return Static.instance
     }
-
-    func getRequestToken() {
-        requestSerializer.removeAccessToken()
+    
+    func homeTimelineWithParams(params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) -> ()) {
+        GET("1.1/statuses/home_timeline.json", parameters: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            
+            var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
+            completion(tweets: tweets, error: nil)
+            
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                completion(tweets: nil, error: error)
+        }
+    }
+    
+    func loginWithCompletion(completion: (user: User?, error: NSError?) -> ()) {
+        loginCompletion = completion
         
+        // Fetch request token and redirect to authorization page
+        requestSerializer.removeAccessToken()
         fetchRequestTokenWithPath(
             "oauth/request_token",
             method: "GET",
@@ -38,29 +53,31 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
                 
             }) { (error: NSError!) -> Void in
                 println("Failed to receive requestToken. \(error.description)")
+                self.loginCompletion?(user: nil, error: error)
         }
     }
     
-    func getAccessToken(url: NSURL) {
+    func openUrl(url: NSURL) {
         fetchAccessTokenWithPath("oauth/access_token", method: "POST", requestToken: BDBOAuth1Credential(queryString: url.query), success: { (accessToken: BDBOAuth1Credential!) ->
             Void in
             println("Successfully received accessToken.")
             
             TwitterClient.sharedInstance.requestSerializer.saveAccessToken(accessToken)
             TwitterClient.sharedInstance.GET("1.1/account/verify_credentials.json", parameters: nil, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-                    println("user: \(response)")
-                }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                    println("error getting user")
-                })
-            
-            TwitterClient.sharedInstance.GET("1.1/statuses/home_timeline.json", parameters: nil, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-                println("home_timeline: \(response)")
-                }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
-                    println("error getting home timeline")
-            })
+                
+                var user = User(dictionary: response as! NSDictionary)
+                println("user: \(user.name)")
+                User.currentUser = user
+                
+                self.loginCompletion?(user: user, error: nil)
+                }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                    println("Error getting user.")
+                    self.loginCompletion?(user: nil, error: error)
+            }
             
             }) { (error: NSError!) -> Void in
                 println("Failed to receive accessToken.")
+                self.loginCompletion?(user: nil, error: error)
         }
     }
 }
