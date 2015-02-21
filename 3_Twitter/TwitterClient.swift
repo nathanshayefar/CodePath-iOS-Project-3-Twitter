@@ -7,8 +7,6 @@
 //
 
 let twitterBaseUrl = NSURL(string: "https://api.twitter.com")
-//let twiterConsumerKey = "pN6bfPJNYV64Hk6sdyEhGlrkk"
-//let twitterConsumerSecret = "QDJ6NR66XuoKHa10fY92DiKmz6f9lXVuXezNSvJo0CPPP773fV"
 let callbackUrl = NSURL(string: "nstwitter://oauth")
 let authUrlString = "https://api.twitter.com/oauth/authorize?oauth_token="
 

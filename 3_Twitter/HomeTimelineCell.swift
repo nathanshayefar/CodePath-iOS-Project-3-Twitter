@@ -18,6 +18,8 @@ class HomeTimelineCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        self.backgroundColor = Color.secondaryColor
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
