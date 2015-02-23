@@ -53,7 +53,7 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         }
     }
     
-    func unFavoriteTweet(tweetID: String) {
+    func unfavoriteTweet(tweetID: String) {
         let params = ["id": tweetID]
         
         POST("1.1/favorites/destroy.json", parameters: params, success: {(operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in

@@ -16,6 +16,8 @@ class TweetDetailViewController: UIViewController {
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var retweetLabel: UILabel!
     @IBOutlet weak var favoriteLabel: UILabel!
+    @IBOutlet weak var retweetButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
     
     var tweet: Tweet?
 
@@ -27,17 +29,26 @@ class TweetDetailViewController: UIViewController {
         self.view.backgroundColor = Color.secondaryColor
         self.bodyLabel.preferredMaxLayoutWidth = self.bodyLabel.frame.size.width
         
-        if let tweet = self.tweet {
-            let user = tweet.user!
+        // Set up buttons
+        self.retweetButton.setImage(UIImage(named: "retweet_default") as UIImage?, forState: .Normal)
+        self.retweetButton.setImage(UIImage(named: "retweet_enabled") as UIImage?, forState: .Selected)
+        self.favoriteButton.setImage(UIImage(named: "favorite_default") as UIImage?, forState: .Normal)
+        self.favoriteButton.setImage(UIImage(named: "favorite_enabled") as UIImage?, forState: .Selected)
+        
+        if tweet != nil {
+            let user = tweet!.user!
+            
             realNameLabel.text = user.name
             screenNameLabel.text = "@\(user.screenName!)"
             profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!))
             
-            timestampLabel.text = tweet.createdAtString
-            bodyLabel.text = tweet.text
+            timestampLabel.text = tweet!.createdAtString
+            bodyLabel.text = tweet!.text
+            retweetLabel.text = String(tweet!.retweetCount)
+            favoriteLabel.text = String(tweet!.favoritesCount)
             
-            retweetLabel.text = String(tweet.retweetCount)
-            favoriteLabel.text = String(tweet.favoritesCount)
+            retweetButton.selected = tweet!.isRetweeted!
+            favoriteButton.selected = tweet!.isFavorited!
         }
     }
     
@@ -59,9 +70,18 @@ class TweetDetailViewController: UIViewController {
     
     @IBAction func onRetweet(sender: AnyObject) {
         TwitterClient.sharedInstance.retweet(self.tweet!.idString!)
+        self.retweetButton.selected = true
     }
     
     @IBAction func onFavorite(sender: AnyObject) {
-        TwitterClient.sharedInstance.favoriteTweet(self.tweet!.idString!)
+        if let previouslyFavorited = tweet?.isFavorited {
+            if (previouslyFavorited) {
+                TwitterClient.sharedInstance.unfavoriteTweet(self.tweet!.idString!)
+            } else {
+                TwitterClient.sharedInstance.favoriteTweet(self.tweet!.idString!)
+            }
+            
+            self.favoriteButton.selected = !previouslyFavorited
+        }
     }
 }

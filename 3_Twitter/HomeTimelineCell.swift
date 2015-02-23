@@ -16,6 +16,8 @@ class HomeTimelineCell: UITableViewCell {
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var bodyLabel: UILabel!
+    @IBOutlet weak var retweetButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
     
     var tweet: Tweet?
     var delegate: HomeTimelineCellDelegate?
@@ -25,9 +27,18 @@ class HomeTimelineCell: UITableViewCell {
         
         self.backgroundColor = Color.secondaryColor
         
+        // Set up buttons
+        self.retweetButton.setImage(UIImage(named: "retweet_default") as UIImage?, forState: .Normal)
+        self.retweetButton.setImage(UIImage(named: "retweet_enabled") as UIImage?, forState: .Selected)
+        self.favoriteButton.setImage(UIImage(named: "favorite_default") as UIImage?, forState: .Normal)
+        self.favoriteButton.setImage(UIImage(named: "favorite_enabled") as UIImage?, forState: .Selected)
+        
+        // Update views
         self.profileImageView.layer.cornerRadius = 3
         self.profileImageView.clipsToBounds = true
         self.bodyLabel.preferredMaxLayoutWidth = self.bodyLabel.frame.size.width
+        
+        relayout()
     }
     
     override func layoutSubviews() {
@@ -39,17 +50,25 @@ class HomeTimelineCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    func relayout() {
+        if let tweet = self.tweet {
+            let user = tweet.user!
+            
+            realNameLabel.text = user.name
+            screenNameLabel.text = "@\(user.screenName!)"
+            profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!))
+            
+            timestampLabel.text = tweet.createdAtString
+            bodyLabel.text = tweet.text
+            
+            retweetButton.selected = tweet.isRetweeted!
+            favoriteButton.selected = tweet.isFavorited!
+        }
+    }
+    
     func setTweet(tweet: Tweet) {
         self.tweet = tweet
-        
-        let user = tweet.user!
-            
-        realNameLabel.text = user.name
-        screenNameLabel.text = "@\(user.screenName!)"
-        profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!))
-            
-        timestampLabel.text = tweet.createdAtString
-        bodyLabel.text = tweet.text
+        relayout()
     }
     
     // MARK: Tweet actions
@@ -60,9 +79,18 @@ class HomeTimelineCell: UITableViewCell {
     
     @IBAction func onRetweet(sender: AnyObject) {
         TwitterClient.sharedInstance.retweet(self.tweet!.idString!)
+        self.retweetButton.selected = true
     }
     
     @IBAction func onFavorite(sender: AnyObject) {
-        TwitterClient.sharedInstance.favoriteTweet(self.tweet!.idString!)
+        if let previouslyFavorited = tweet?.isFavorited {
+            if (previouslyFavorited) {
+                TwitterClient.sharedInstance.unfavoriteTweet(self.tweet!.idString!)
+            } else {
+                TwitterClient.sharedInstance.favoriteTweet(self.tweet!.idString!)
+            }
+            
+            self.favoriteButton.selected = !previouslyFavorited
+        }
     }
 }

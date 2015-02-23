@@ -122,8 +122,10 @@
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="bodyLabel" destination="qob-SI-eSG" id="nHo-4U-UGH"/>
+                                            <outlet property="favoriteButton" destination="Xhp-IE-SuJ" id="hcO-TS-doB"/>
                                             <outlet property="profileImageView" destination="Nub-Hd-tbU" id="ytD-y7-ngM"/>
                                             <outlet property="realNameLabel" destination="5VS-EI-4ir" id="gaU-7C-84P"/>
+                                            <outlet property="retweetButton" destination="hkA-qq-oYz" id="OoS-EV-wm3"/>
                                             <outlet property="screenNameLabel" destination="9fk-wr-0p8" id="mFg-qK-yLH"/>
                                             <outlet property="timestampLabel" destination="f2N-af-98u" id="0W8-1L-Yz5"/>
                                         </connections>
@@ -363,9 +365,11 @@
                     <navigationItem key="navigationItem" id="whA-V8-0cf"/>
                     <connections>
                         <outlet property="bodyLabel" destination="9l7-bp-1B8" id="ayQ-CJ-kGc"/>
+                        <outlet property="favoriteButton" destination="os2-Lp-tsV" id="DkJ-HM-1uK"/>
                         <outlet property="favoriteLabel" destination="QSC-Rc-vfk" id="Osc-LZ-xMg"/>
                         <outlet property="profileImageView" destination="yPD-Kb-KQI" id="2E2-2s-54W"/>
                         <outlet property="realNameLabel" destination="iHX-yK-nhY" id="bYy-gk-mFU"/>
+                        <outlet property="retweetButton" destination="NDP-qC-bKP" id="oIv-3E-vjM"/>
                         <outlet property="retweetLabel" destination="SO6-MW-C8j" id="7Qk-dY-xuJ"/>
                         <outlet property="screenNameLabel" destination="EOK-se-pDJ" id="K0U-MV-GOT"/>
                         <outlet property="timestampLabel" destination="PIK-fo-ccn" id="n07-sS-6Tc"/>

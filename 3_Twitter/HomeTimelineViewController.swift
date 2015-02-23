@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Nathan Shayefar. All rights reserved.
 //
 
-class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, HomeTimelineCellDelegate {
+class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HomeTimelineCellDelegate {
     private let homeTimelineCellId = "HomeTimelineCell"
     private let tweetDetailSegueId = "tweetDetailSegue"
     private let composeSegueId = "composeSegue"
