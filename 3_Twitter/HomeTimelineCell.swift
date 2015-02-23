@@ -20,7 +20,7 @@ class HomeTimelineCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     
     var tweet: Tweet?
-    var delegate: HomeTimelineCellDelegate?
+    weak var delegate: HomeTimelineCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()

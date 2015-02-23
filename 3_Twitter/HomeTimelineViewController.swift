@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Nathan Shayefar. All rights reserved.
 //
 
-class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HomeTimelineCellDelegate {
+class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HomeTimelineCellDelegate, ComposeViewControllerDelegate {
     private let homeTimelineCellId = "HomeTimelineCell"
     private let tweetDetailSegueId = "tweetDetailSegue"
     private let composeSegueId = "composeSegue"
@@ -43,10 +43,11 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func getHomeTimelineTweets() {
+        self.refreshControl?.beginRefreshing()
+        
         TwitterClient.sharedInstance.homeTimelineWithParams(nil, completion: { (tweets, error) -> () in
             self.tweets = tweets
             self.tableView.reloadData()
-            
             self.refreshControl?.endRefreshing()
         })
     }
@@ -85,6 +86,10 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
             }
             
+        case composeSegueId:
+            let vc = segue.destinationViewController as! ComposeViewController
+            vc.delegate = self
+            
         default:
             return
         }
@@ -110,5 +115,11 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     
     func didReply(homeTimelineCell: HomeTimelineCell) {
         performSegueWithIdentifier(composeSegueId, sender: self)
+    }
+    
+    // MARK: ComposeViewControllerDelegate
+    
+    func createdTweet(composeViewController: ComposeViewController) {
+        self.getHomeTimelineTweets()
     }
 }

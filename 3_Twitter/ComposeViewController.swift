@@ -6,6 +6,10 @@
 //  Copyright (c) 2015 Nathan Shayefar. All rights reserved.
 //
 
+protocol ComposeViewControllerDelegate : class {
+    func createdTweet(composeViewController: ComposeViewController)
+}
+
 class ComposeViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     
@@ -13,6 +17,7 @@ class ComposeViewController: UIViewController {
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var bodyTextField: UITextField!
     
+    weak var delegate: ComposeViewControllerDelegate?
     private var tweet: Tweet?
     private var remainingCharactersButton: UIBarButtonItem?
     private let maximumCharacters = 140
@@ -39,7 +44,7 @@ class ComposeViewController: UIViewController {
         
         profileImageView.setImageWithURL(NSURL(string: User.currentUser!.profileImageUrl!))
         realNameLabel.text = User.currentUser!.name
-        screenNameLabel.text = User.currentUser!.screenName
+        screenNameLabel.text = "@\(User.currentUser!.screenName!)"
     }
     
     // MARK: NavigationItem
@@ -51,6 +56,8 @@ class ComposeViewController: UIViewController {
     func onTweet() {
         TwitterClient.sharedInstance.postTweet(bodyTextField.text)
         println("Posted status: \(bodyTextField.text)")
+        
+        self.delegate?.createdTweet(self)
         
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
