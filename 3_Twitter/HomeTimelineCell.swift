@@ -65,5 +65,4 @@ class HomeTimelineCell: UITableViewCell {
     @IBAction func onFavorite(sender: AnyObject) {
         TwitterClient.sharedInstance.favoriteTweet(self.tweet!.idString!)
     }
-    
 }

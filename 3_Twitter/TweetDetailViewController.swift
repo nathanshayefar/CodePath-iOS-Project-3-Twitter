@@ -7,8 +7,9 @@
 //
 
 class TweetDetailViewController: UIViewController {
+    private let detailToComposeSegueID = "detailToComposeSegue"
+    
     @IBOutlet weak var profileImageView: UIImageView!
-
     @IBOutlet weak var realNameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var bodyLabel: UILabel!
@@ -47,6 +48,20 @@ class TweetDetailViewController: UIViewController {
     // MARK: NavigationItem
     
     func onReply() {
-        println("onReply")
+        self.onReply(self)
+    }
+    
+    // MARK: Tweet actions
+    
+    @IBAction func onReply(sender: AnyObject) {
+        performSegueWithIdentifier(detailToComposeSegueID, sender: self)
+    }
+    
+    @IBAction func onRetweet(sender: AnyObject) {
+        TwitterClient.sharedInstance.retweet(self.tweet!.idString!)
+    }
+    
+    @IBAction func onFavorite(sender: AnyObject) {
+        TwitterClient.sharedInstance.favoriteTweet(self.tweet!.idString!)
     }
 }
