@@ -33,6 +33,46 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         }
     }
     
+    func postTweet(status: String) {
+        let params = ["status": status]
+        
+        POST("1.1/statuses/update.json", parameters: params, success: {(operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            println("Posted status: \(status)")
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                println("Failed to post status with text:\(status)")
+        }
+    }
+    
+    func favoriteTweet(tweetID: String) {
+        let params = ["id": tweetID]
+        
+        POST("1.1/favorites/create.json", parameters: params, success: {(operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            println("Favorited tweet: \(tweetID)")
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                println("Failed to favorite tweet. \(error)")
+        }
+    }
+    
+    func unFavoriteTweet(tweetID: String) {
+        let params = ["id": tweetID]
+        
+        POST("1.1/favorites/destroy.json", parameters: params, success: {(operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            println("Unavorited tweet: \(tweetID)")
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                println("Failed to unfavorite tweet. \(error)")
+        }
+    }
+    
+    func retweet(tweetID: String) {
+        let params = ["id": tweetID]
+        
+        POST("1.1/statuses/retweet/\(tweetID).json", parameters: params, success: {(operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            println("Retweeted tweet: \(tweetID)")
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                println("Failed to retweet: \(error)")
+        }
+    }
+    
     func loginWithCompletion(completion: (user: User?, error: NSError?) -> ()) {
         loginCompletion = completion
         

@@ -8,6 +8,7 @@
 
 class Tweet {
     var user: User?
+    var idString: String?
     var text: String?
     var createdAtString: String?
     var createdAt: NSDate?
@@ -17,6 +18,7 @@ class Tweet {
     
     init(dictionary: NSDictionary) {
         user = User(dictionary: dictionary["user"] as! NSDictionary)
+        idString = dictionary["id_str"] as? String
         text = dictionary["text"] as? String
         createdAtString = dictionary["created_at"] as? String
         

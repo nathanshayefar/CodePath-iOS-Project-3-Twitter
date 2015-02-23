@@ -38,10 +38,13 @@ class ComposeViewController: UIViewController {
     // MARK: NavigationItem
     
     func onCancel() {
-        println("onCancel")
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     func onTweet() {
-        println("onTweet")
+        TwitterClient.sharedInstance.postTweet(bodyTextField.text)
+        println("Posted status: \(bodyTextField.text)")
+        
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
 }

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Nathan Shayefar. All rights reserved.
 //
 
-class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, HomeTimelineCellDelegate {
     private let homeTimelineCellId = "HomeTimelineCell"
     private let tweetDetailSegueId = "tweetDetailSegue"
     private let composeSegueId = "composeSegue"
@@ -68,6 +68,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier(homeTimelineCellId, forIndexPath: indexPath) as! HomeTimelineCell
         
+        cell.delegate = self
         if let tweet = self.tweets?[indexPath.row] {
             cell.setTweet(tweet)
         }
@@ -103,5 +104,11 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     
     func onRefresh() {
         self.getHomeTimelineTweets()
+    }
+    
+    // MARK: HomeTimelineCellDelegate
+    
+    func didReply(homeTimelineCell: HomeTimelineCell) {
+        performSegueWithIdentifier(composeSegueId, sender: self)
     }
 }
