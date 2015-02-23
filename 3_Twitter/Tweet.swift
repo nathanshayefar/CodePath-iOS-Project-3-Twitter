@@ -16,6 +16,7 @@ class Tweet {
     var retweetCount: Int
     var isRetweeted: Bool?
     var isFavorited: Bool?
+    var timeStringSinceCreation: String
     
     init(dictionary: NSDictionary) {
         user = User(dictionary: dictionary["user"] as! NSDictionary)
@@ -45,6 +46,8 @@ class Tweet {
         if let favorited = dictionary["favorited"] as? Int {
             isFavorited = (favorited == 1)
         }
+        
+        timeStringSinceCreation = Time.timeStringSinceCreation(createdAt)
     }
     
     class func tweetsWithArray(array: [NSDictionary]) -> [Tweet] {

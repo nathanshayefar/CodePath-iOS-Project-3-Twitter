@@ -58,7 +58,7 @@ class HomeTimelineCell: UITableViewCell {
             screenNameLabel.text = "@\(user.screenName!)"
             profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!))
             
-            timestampLabel.text = tweet.createdAtString
+            timestampLabel.text = tweet.timeStringSinceCreation
             bodyLabel.text = tweet.text
             
             retweetButton.selected = tweet.isRetweeted!
