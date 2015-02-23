@@ -13,7 +13,9 @@ class ComposeViewController: UIViewController {
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var bodyTextField: UITextField!
     
-    var tweet: Tweet?
+    private var tweet: Tweet?
+    private var remainingCharactersButton: UIBarButtonItem?
+    private let maximumCharacters = 140
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +24,12 @@ class ComposeViewController: UIViewController {
         self.bodyTextField.backgroundColor = Color.secondaryColor
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "onCancel")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Tweet", style: .Plain, target: self, action: "onTweet")
+        
+        remainingCharactersButton = UIBarButtonItem(title: String(maximumCharacters), style: .Plain, target: self, action: nil)
+        remainingCharactersButton?.enabled = false
+        
+        var tweetButton = UIBarButtonItem(title: "Tweet", style: .Plain, target: self, action: "onTweet")
+        self.navigationItem.setRightBarButtonItems([tweetButton, remainingCharactersButton!], animated: false)
         
         self.navigationItem.title = "Compose"
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
@@ -46,5 +53,16 @@ class ComposeViewController: UIViewController {
         println("Posted status: \(bodyTextField.text)")
         
         self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    @IBAction func onBodyTextFieldEditingChanged(sender: AnyObject) {
+        remainingCharactersButton?.title = remainingCharactersString()
+    }
+    
+    private func remainingCharactersString() -> String {
+        let usedCharacters = count(bodyTextField.text)
+        let remainingCharacters = max(0, maximumCharacters - usedCharacters)
+        
+        return String(remainingCharacters)
     }
 }
