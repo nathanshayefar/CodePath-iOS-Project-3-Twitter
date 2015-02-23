@@ -13,13 +13,11 @@ class HomeTimelineCell: UITableViewCell {
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var bodyLabel: UILabel!
-    
-    private let TWEET_DETAIL_SEGUE = "TweetDetailSegue"
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.backgroundColor = Color.secondaryColor
+        self.backgroundColor = UIColor.blackColor()
         
         self.profileImageView.layer.cornerRadius = 3
         self.profileImageView.clipsToBounds = true
