@@ -36,12 +36,15 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
         TwitterClient.sharedInstance.homeTimelineWithParams(nil, completion: { (tweets, error) -> () in
             self.tweets = tweets
             self.tableView.reloadData()
+            
+            println(error)
         })
     }
     
     // MARK: TableView
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        println(tweets)
         if let count = tweets?.count {
             return count
         } else {
@@ -50,7 +53,6 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         performSegueWithIdentifier(tweetDetailSegueId, sender: self)
     }
     
@@ -64,15 +66,23 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
         return cell
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == tweetDetailSegueId {
+            if let indexPath = self.tableView.indexPathForSelectedRow() {
+                let vc = segue.destinationViewController as! TweetDetailViewController
+                vc.setTweet(tweets![indexPath.row])
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
+            }
+        }
+    }
+    
     // MARK: NavigationItem
     
     func onSignOutButton() {
-        println("sign out")
         User.currentUser?.logout()
     }
     
     func onNewButton() {
-        println("new")
         performSegueWithIdentifier(composeSegueId, sender: self)
     }
 }

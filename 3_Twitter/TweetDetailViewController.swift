@@ -7,16 +7,46 @@
 //
 
 class TweetDetailViewController: UIViewController {
+    @IBOutlet weak var profileImageView: UIImageView!
+
+    @IBOutlet weak var realNameLabel: UILabel!
+    @IBOutlet weak var screenNameLabel: UILabel!
+    @IBOutlet weak var bodyLabel: UILabel!
+    @IBOutlet weak var timestampLabel: UILabel!
+    @IBOutlet weak var retweetLabel: UILabel!
+    @IBOutlet weak var favoriteLabel: UILabel!
+    
+    var tweet: Tweet?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reply", style: .Plain, target: self, action: "onReply")
         
-        // MARK: NavigationItem
+        self.view.backgroundColor = Color.secondaryColor
+        self.bodyLabel.preferredMaxLayoutWidth = self.bodyLabel.frame.size.width
         
-        func onReply() {
-            println("onReply")
+        if let tweet = self.tweet {
+            let user = tweet.user!
+            realNameLabel.text = user.name
+            screenNameLabel.text = "@\(user.screenName!)"
+            profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!))
+            
+            timestampLabel.text = tweet.createdAtString
+            bodyLabel.text = tweet.text
+            
+            retweetLabel.text = String(tweet.retweetCount)
+            favoriteLabel.text = String(tweet.favoritesCount)
         }
+    }
+    
+    func setTweet(tweet: Tweet) {
+        self.tweet = tweet
+    }
+    
+    // MARK: NavigationItem
+    
+    func onReply() {
+        println("onReply")
     }
 }

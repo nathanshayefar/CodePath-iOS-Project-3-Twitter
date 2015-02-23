@@ -17,7 +17,7 @@ class HomeTimelineCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.backgroundColor = UIColor.blackColor()
+        self.backgroundColor = Color.secondaryColor
         
         self.profileImageView.layer.cornerRadius = 3
         self.profileImageView.clipsToBounds = true
@@ -38,7 +38,6 @@ class HomeTimelineCell: UITableViewCell {
             
         realNameLabel.text = user.name
         screenNameLabel.text = "@\(user.screenName!)"
-        println(user.profileImageUrl)
         profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!))
             
         timestampLabel.text = tweet.createdAtString
