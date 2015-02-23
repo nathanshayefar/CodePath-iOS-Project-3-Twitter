@@ -76,12 +76,16 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == tweetDetailSegueId {
+        switch segue.identifier! {
+        case tweetDetailSegueId:
             if let indexPath = self.tableView.indexPathForSelectedRow() {
                 let vc = segue.destinationViewController as! TweetDetailViewController
                 vc.setTweet(tweets![indexPath.row])
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
             }
+            
+        default:
+            return
         }
     }
     

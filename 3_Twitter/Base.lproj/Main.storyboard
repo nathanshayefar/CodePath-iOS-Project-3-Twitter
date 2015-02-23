@@ -124,8 +124,8 @@
                     <navigationItem key="navigationItem" id="rI4-Zf-d2a"/>
                     <connections>
                         <outlet property="tableView" destination="fcv-0k-xrp" id="cIy-lP-GrD"/>
-                        <segue destination="tW0-rq-GVe" kind="modal" identifier="composeSegue" id="kNh-44-gsm"/>
                         <segue destination="HgJ-U6-Muu" kind="push" identifier="tweetDetailSegue" id="xxQ-MY-3WD"/>
+                        <segue destination="ba3-87-L6R" kind="push" identifier="composeSegue" id="Jwp-bV-Yyn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -341,22 +341,71 @@
             <point key="canvasLocation" x="2210" y="1168"/>
         </scene>
         <!--Compose View Controller-->
-        <scene sceneID="wLT-DX-Law">
+        <scene sceneID="mlK-Ql-tpc">
             <objects>
-                <viewController id="tW0-rq-GVe" customClass="ComposeViewController" customModule="__Twitter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ba3-87-L6R" customClass="ComposeViewController" customModule="__Twitter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="OBm-Yf-icw"/>
-                        <viewControllerLayoutGuide type="bottom" id="Bb7-au-Md6"/>
+                        <viewControllerLayoutGuide type="top" id="dCL-2K-5tg"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fgc-q5-Vx6"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="zyb-CP-eA4">
+                    <view key="view" contentMode="scaleToFill" id="kXX-9e-oMw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="92T-dp-NLt">
+                                <rect key="frame" x="8" y="72" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="AZ6-9B-q9x"/>
+                                    <constraint firstAttribute="height" constant="48" id="t9h-GN-9hx"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Guy Dotcom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gOx-V0-TA7">
+                                <rect key="frame" x="64" y="72" width="74" height="15"/>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@guyd73" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zSd-ON-Vob">
+                                <rect key="frame" x="64" y="90" width="48" height="14"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4PP-yL-0p6">
+                                <rect key="frame" x="8" y="128" width="304" height="300"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="lwu-vp-hBM"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" keyboardType="twitter" keyboardAppearance="alert" returnKeyType="send"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="92T-dp-NLt" firstAttribute="top" secondItem="dCL-2K-5tg" secondAttribute="bottom" constant="8" id="6sq-Xu-b3C"/>
+                            <constraint firstAttribute="trailing" secondItem="4PP-yL-0p6" secondAttribute="trailing" constant="8" id="7s7-RO-Yp2"/>
+                            <constraint firstItem="zSd-ON-Vob" firstAttribute="top" secondItem="gOx-V0-TA7" secondAttribute="bottom" constant="3" id="GwD-un-NKs"/>
+                            <constraint firstItem="92T-dp-NLt" firstAttribute="leading" secondItem="kXX-9e-oMw" secondAttribute="leading" constant="8" id="IpT-Fz-RIa"/>
+                            <constraint firstItem="4PP-yL-0p6" firstAttribute="leading" secondItem="kXX-9e-oMw" secondAttribute="leading" constant="8" id="PeG-3G-xDU"/>
+                            <constraint firstItem="gOx-V0-TA7" firstAttribute="top" secondItem="dCL-2K-5tg" secondAttribute="bottom" constant="8" id="S24-Fm-Duk"/>
+                            <constraint firstItem="gOx-V0-TA7" firstAttribute="leading" secondItem="92T-dp-NLt" secondAttribute="trailing" constant="8" id="iue-yf-gHE"/>
+                            <constraint firstItem="zSd-ON-Vob" firstAttribute="leading" secondItem="92T-dp-NLt" secondAttribute="trailing" constant="8" id="jBs-bo-O7Z"/>
+                            <constraint firstItem="4PP-yL-0p6" firstAttribute="top" secondItem="92T-dp-NLt" secondAttribute="bottom" constant="8" id="uOh-pb-KAm"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="MlO-Re-jSv"/>
+                    <connections>
+                        <outlet property="bodyTextField" destination="4PP-yL-0p6" id="9o9-og-VKv"/>
+                        <outlet property="profileImageView" destination="92T-dp-NLt" id="Eaf-7p-tza"/>
+                        <outlet property="realNameLabel" destination="gOx-V0-TA7" id="fzV-RK-fcZ"/>
+                        <outlet property="screenNameLabel" destination="zSd-ON-Vob" id="ZEJ-b6-gfp"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="des-q1-drO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EIp-Ip-FOB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2815" y="366"/>
+            <point key="canvasLocation" x="2727" y="366"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="z02-6R-ySU">
