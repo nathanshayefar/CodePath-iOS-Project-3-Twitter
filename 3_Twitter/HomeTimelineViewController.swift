@@ -12,7 +12,8 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     private let composeSegueId = "composeSegue"
     
     @IBOutlet weak var tableView: UITableView!
-
+    
+    var refreshControl: UIRefreshControl!
     var tweets: [Tweet]?
     
     override func viewDidLoad() {
@@ -33,18 +34,26 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .Plain, target: self, action: "onSignOutButton")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .Plain, target: self, action: "onNewButton")
         
+        // Pull to refresh
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.insertSubview(refreshControl, atIndex: 0)
+        
+        self.getHomeTimelineTweets()
+    }
+    
+    func getHomeTimelineTweets() {
         TwitterClient.sharedInstance.homeTimelineWithParams(nil, completion: { (tweets, error) -> () in
             self.tweets = tweets
             self.tableView.reloadData()
             
-            println(error)
+            self.refreshControl?.endRefreshing()
         })
     }
     
     // MARK: TableView
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        println(tweets)
         if let count = tweets?.count {
             return count
         } else {
@@ -84,5 +93,11 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     
     func onNewButton() {
         performSegueWithIdentifier(composeSegueId, sender: self)
+    }
+    
+    // MARK: UIRefreshControl
+    
+    func onRefresh() {
+        self.getHomeTimelineTweets()
     }
 }

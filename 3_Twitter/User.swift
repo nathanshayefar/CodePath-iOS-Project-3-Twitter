@@ -21,8 +21,6 @@ class User {
     init(dictionary : NSDictionary) {
         self.dictionary = dictionary
         
-        println("guy: \(dictionary)")
-        
         name = dictionary["name"] as? String
         screenName = dictionary["screen_name"] as? String
         profileImageUrl = dictionary["profile_image_url"] as? String
