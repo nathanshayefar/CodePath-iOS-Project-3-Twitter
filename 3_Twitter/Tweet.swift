@@ -59,4 +59,48 @@ class Tweet {
         
         return tweets
     }
+    
+    func toggleFavorite() {
+        if let previouslyFavorited = self.isFavorited {
+            if previouslyFavorited {
+                unfavorite()
+            } else {
+                favorite()
+            }
+        }
+    }
+    
+    func toggleRetweet() {
+        if let previouslyRetweeted = self.isRetweeted {
+            if previouslyRetweeted {
+                unretweet()
+            } else {
+                retweet()
+            }
+        }
+    }
+    
+    private func favorite() {
+        TwitterClient.sharedInstance.favoriteTweet(idString!)
+        favoritesCount++
+        isFavorited = true
+    }
+    
+    private func unfavorite() {
+        TwitterClient.sharedInstance.unfavoriteTweet(idString!)
+        favoritesCount--
+        isFavorited = false
+    }
+    
+    private func retweet() {
+        TwitterClient.sharedInstance.retweet(idString!)
+        retweetCount++
+        isRetweeted = true
+    }
+    
+    private func unretweet() {
+        TwitterClient.sharedInstance.unretweet(idString!)
+        retweetCount--
+        isRetweeted = false
+    }
 }

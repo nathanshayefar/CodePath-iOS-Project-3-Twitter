@@ -45,10 +45,6 @@ class HomeTimelineCell: UITableViewCell {
         super.layoutSubviews()
         self.bodyLabel.preferredMaxLayoutWidth = self.bodyLabel.frame.size.width
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
     func relayout() {
         if let tweet = self.tweet {
@@ -78,19 +74,12 @@ class HomeTimelineCell: UITableViewCell {
     }
     
     @IBAction func onRetweet(sender: AnyObject) {
-        TwitterClient.sharedInstance.retweet(self.tweet!.idString!)
-        self.retweetButton.selected = true
+        self.tweet?.toggleRetweet()
+        relayout()
     }
     
     @IBAction func onFavorite(sender: AnyObject) {
-        if let previouslyFavorited = tweet?.isFavorited {
-            if (previouslyFavorited) {
-                TwitterClient.sharedInstance.unfavoriteTweet(self.tweet!.idString!)
-            } else {
-                TwitterClient.sharedInstance.favoriteTweet(self.tweet!.idString!)
-            }
-            
-            self.favoriteButton.selected = !previouslyFavorited
-        }
+        self.tweet?.toggleFavorite()
+        relayout()
     }
 }

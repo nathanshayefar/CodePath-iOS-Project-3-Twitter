@@ -35,6 +35,10 @@ class TweetDetailViewController: UIViewController {
         self.favoriteButton.setImage(UIImage(named: "favorite_default") as UIImage?, forState: .Normal)
         self.favoriteButton.setImage(UIImage(named: "favorite_enabled") as UIImage?, forState: .Selected)
         
+        relayout()
+    }
+    
+    private func relayout() {
         if tweet != nil {
             let user = tweet!.user!
             
@@ -54,6 +58,7 @@ class TweetDetailViewController: UIViewController {
     
     func setTweet(tweet: Tweet) {
         self.tweet = tweet
+        relayout()
     }
     
     // MARK: NavigationItem
@@ -69,19 +74,12 @@ class TweetDetailViewController: UIViewController {
     }
     
     @IBAction func onRetweet(sender: AnyObject) {
-        TwitterClient.sharedInstance.retweet(self.tweet!.idString!)
-        self.retweetButton.selected = true
+        self.tweet?.toggleRetweet()
+        relayout()
     }
     
     @IBAction func onFavorite(sender: AnyObject) {
-        if let previouslyFavorited = tweet?.isFavorited {
-            if (previouslyFavorited) {
-                TwitterClient.sharedInstance.unfavoriteTweet(self.tweet!.idString!)
-            } else {
-                TwitterClient.sharedInstance.favoriteTweet(self.tweet!.idString!)
-            }
-            
-            self.favoriteButton.selected = !previouslyFavorited
-        }
+        self.tweet?.toggleFavorite()
+        relayout()
     }
 }

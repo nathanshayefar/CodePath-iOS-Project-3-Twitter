@@ -73,6 +73,16 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         }
     }
     
+    func unretweet(tweetID: String) {
+        let params = ["id": tweetID]
+        
+        POST("1.1/statuses/unretweet/\(tweetID).json", parameters: params, success: {(operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            println("Unretweeted tweet: \(tweetID)")
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                println("Failed to unretweet: \(error)")
+        }
+    }
+    
     func loginWithCompletion(completion: (user: User?, error: NSError?) -> ()) {
         loginCompletion = completion
         
