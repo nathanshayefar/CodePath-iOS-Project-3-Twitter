@@ -17,6 +17,8 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
     private var minX: CGFloat?
     private var maxX: CGFloat?
     
+    private var menuActions = ["Profile", "Home Timeline", "Mentions"]
+    
     private var viewControllers: [UIViewController]?
     
     override func viewDidLoad() {
@@ -50,7 +52,7 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
             if let newViewController = activeViewController {
                 self.addChildViewController(newViewController)
                 self.view.frame = self.contentView.bounds
-//                self.view.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+                self.view.autoresizingMask = .FlexibleWidth | .FlexibleHeight
                 self.contentView.addSubview(newViewController.view)
                 newViewController.didMoveToParentViewController(self)
             }
@@ -62,7 +64,7 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         
-        cell.textLabel?.text = "Goat"
+        cell.textLabel?.text = menuActions[indexPath.row]
         
         return cell
     }
@@ -80,7 +82,6 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
     // Gesture detector
 
     @IBAction func onPanContainerView(sender: UIPanGestureRecognizer) {
-        
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
         
