@@ -24,14 +24,7 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Storyboarding
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let profileViewController = storyboard.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
-        profileViewController.setUser(User.currentUser!)
-        let homeTimelineViewController = storyboard.instantiateViewControllerWithIdentifier("HomeTimelineViewController") as!HomeTimelineViewController
-        let mentionsViewController = storyboard.instantiateViewControllerWithIdentifier("TweetDetailViewController") as! TweetDetailViewController
-        viewControllers = [profileViewController, homeTimelineViewController, mentionsViewController]
-        self.activeViewController = viewControllers?.first
+        self.initializeViewControllers()
         
         self.menuView.dataSource = self
         self.menuView.delegate = self
@@ -40,6 +33,23 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         self.maxX = menuView.bounds.width / 2
         
         hideMenu(false)
+    }
+    
+    func initializeViewControllers() {
+        // Storyboarding
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let profileViewController = storyboard.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        profileViewController.setUser(User.currentUser!)
+        
+        let homeTimelineViewController = storyboard.instantiateViewControllerWithIdentifier("HomeTimelineViewController") as!HomeTimelineViewController
+        homeTimelineViewController.setTimelineType(TimelineType.Home)
+        
+        let mentionsViewController = storyboard.instantiateViewControllerWithIdentifier("HomeTimelineViewController") as! HomeTimelineViewController
+        mentionsViewController.setTimelineType(TimelineType.Mentions)
+        
+        viewControllers = [profileViewController, homeTimelineViewController, mentionsViewController]
+        self.activeViewController = viewControllers?.first
     }
     
     var activeViewController: UIViewController? {

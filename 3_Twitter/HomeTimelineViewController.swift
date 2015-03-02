@@ -7,6 +7,9 @@
 //
 
 let homeTimelineCellId = "HomeTimelineCell"
+enum TimelineType {
+    case Home, Mentions
+}
 
 class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HomeTimelineCellDelegate, ComposeViewControllerDelegate {
     private let tweetDetailSegueId = "tweetDetailSegue"
@@ -17,6 +20,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     
     private var refreshControl: UIRefreshControl!
     private var tweets: [Tweet]?
+    private var timelineType = TimelineType.Home
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,17 +46,25 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.insertSubview(refreshControl, atIndex: 0)
         
-        self.getHomeTimelineTweets()
+        self.getTimelineTweets()
     }
     
-    func getHomeTimelineTweets() {
+    func getTimelineTweets() {
         self.refreshControl?.beginRefreshing()
-        
-        TwitterClient.sharedInstance.homeTimelineWithParams(nil, completion: { (tweets, error) -> () in
+        let completion = {(tweets: [Tweet]?, error: NSError?) -> () in
             self.tweets = tweets
             self.tableView.reloadData()
             self.refreshControl?.endRefreshing()
-        })
+        }
+        
+        switch timelineType {
+            
+        case .Home:
+            TwitterClient.sharedInstance.homeTimeline(completion)
+        
+        case .Mentions:
+            TwitterClient.sharedInstance.mentionsTimeline(completion)
+        }
     }
     
     // MARK: TableView
@@ -74,6 +86,10 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         return cell
+    }
+    
+    func setTimelineType(timelineType: TimelineType) {
+        self.timelineType = timelineType
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -116,7 +132,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: UIRefreshControl
     
     func onRefresh() {
-        self.getHomeTimelineTweets()
+        self.getTimelineTweets()
     }
     
     // MARK: HomeTimelineCellDelegate
@@ -132,6 +148,6 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: ComposeViewControllerDelegate
     
     func createdTweet(composeViewController: ComposeViewController) {
-        self.getHomeTimelineTweets()
+        self.getTimelineTweets()
     }
 }
