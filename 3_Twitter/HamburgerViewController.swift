@@ -28,6 +28,7 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         
         self.menuView.dataSource = self
         self.menuView.delegate = self
+        self.menuView.layer.zPosition = 1
         
         self.minX = -menuView.bounds.width / 2
         self.maxX = menuView.bounds.width / 2
@@ -61,8 +62,8 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
             }
             if let newViewController = activeViewController {
                 self.addChildViewController(newViewController)
-                self.view.frame = self.contentView.bounds
-                self.view.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+                newViewController.view.frame = self.contentView.bounds
+                newViewController.view.autoresizingMask = .FlexibleWidth | .FlexibleHeight
                 self.contentView.addSubview(newViewController.view)
                 newViewController.didMoveToParentViewController(self)
             }

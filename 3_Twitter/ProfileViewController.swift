@@ -46,6 +46,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
         self.profileImageView.layer.cornerRadius = 3
         self.profileImageView.clipsToBounds = true
+        self.profileImageView.layer.zPosition = 1
         
         self.getUserTimeline()
     }
@@ -66,6 +67,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             self.profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!)!)
             self.nameLabel.text = user.name
             self.screenNameLabel.text = user.screenName
+            
+            self.profileImageView.layer.zPosition = 1
+            self.nameLabel.layer.zPosition = 1
+            self.screenNameLabel.layer.zPosition = 1
         }
     }
     
