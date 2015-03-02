@@ -17,6 +17,7 @@
 		8A13997E1A95973B00EEA030 /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A13997D1A95973B00EEA030 /* ComposeViewController.swift */; };
 		8A1D16631AA3BB2100844AE9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1D16621AA3BB2100844AE9 /* ProfileViewController.swift */; };
 		8A1D16651AA471D500844AE9 /* TwitterNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1D16641AA471D500844AE9 /* TwitterNavigationController.swift */; };
+		8A1D16671AA486E900844AE9 /* HamburgerMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1D16661AA486E900844AE9 /* HamburgerMenuCell.swift */; };
 		8A6816D21A96DCE900BB8BA7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6816D11A96DCE900BB8BA7 /* LoginViewController.swift */; };
 		8A8DA5D51A98F2CE0058643B /* NBSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8DA5D41A98F2CE0058643B /* NBSColor.swift */; };
 		8AA63C531A9875910040C2A1 /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA63C521A9875910040C2A1 /* ApiKeys.swift */; };
@@ -56,6 +57,7 @@
 		8A13997D1A95973B00EEA030 /* ComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
 		8A1D16621AA3BB2100844AE9 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8A1D16641AA471D500844AE9 /* TwitterNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterNavigationController.swift; sourceTree = "<group>"; };
+		8A1D16661AA486E900844AE9 /* HamburgerMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerMenuCell.swift; sourceTree = "<group>"; };
 		8A6816D11A96DCE900BB8BA7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8A8DA5D41A98F2CE0058643B /* NBSColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBSColor.swift; sourceTree = "<group>"; };
 		8AA63C521A9875910040C2A1 /* ApiKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				8ADB61061A95CC2A00ECAE54 /* HomeTimelineCell.swift */,
+				8A1D16661AA486E900844AE9 /* HamburgerMenuCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				8A8DA5D51A98F2CE0058643B /* NBSColor.swift in Sources */,
 				8ABDFE411AA3AFA1008DCE09 /* HamburgerViewController.swift in Sources */,
 				8A6816D21A96DCE900BB8BA7 /* LoginViewController.swift in Sources */,
+				8A1D16671AA486E900844AE9 /* HamburgerMenuCell.swift in Sources */,
 				8A1D16631AA3BB2100844AE9 /* ProfileViewController.swift in Sources */,
 				8ADB61051A95C6E700ECAE54 /* TwitterClient.swift in Sources */,
 				8A1399561A9595D900EEA030 /* AppDelegate.swift in Sources */,

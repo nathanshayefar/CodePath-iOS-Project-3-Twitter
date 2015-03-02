@@ -10,11 +10,11 @@ import UIKit
 
 class HamburgerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
     @IBOutlet private weak var contentView: UIView!
-    @IBOutlet private weak var menuView: UITableView!
+
+    @IBOutlet weak var tableView: UITableView!
     
-    private let tweetDetailSegueId = "tweetDetailSegue"
-    private let composeSegueId = "composeSegue"
-    private let profileSegueId = "profileSegue"
+    private var tapGestureRecognizer: UITapGestureRecognizer?
+    private var panGestureRecognizer: UIPanGestureRecognizer?
     
     private var originalMenuViewCenter: CGPoint?
     private var minX: CGFloat?
@@ -30,13 +30,22 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         
         self.initializeViewControllers()
         
-        self.menuView.dataSource = self
-        self.menuView.delegate = self
-        self.menuView.layer.zPosition = 1
-        self.menuView.userInteractionEnabled = true
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.layer.zPosition = 1
+        self.tableView.alpha = 0.8
+        self.tableView.allowsSelection = true
+        self.tableView.userInteractionEnabled = true
         
-        self.minX = -menuView.bounds.width / 2
-        self.maxX = menuView.bounds.width / 2
+        self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "didTapMenu:")
+        self.tableView.addGestureRecognizer(self.tapGestureRecognizer!)
+        self.tapGestureRecognizer?.delegate = self
+        
+        self.panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "didPanView:")
+        self.view.addGestureRecognizer(self.panGestureRecognizer!)
+        
+        self.minX = -tableView.bounds.width / 2
+        self.maxX = tableView.bounds.width / 2
         
         hideMenu(false)
     }
@@ -79,10 +88,9 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
     // TableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCellWithIdentifier("HamburgerMenuCell", forIndexPath: indexPath) as! HamburgerMenuCell
         
-        cell.textLabel?.text = menuActions[indexPath.row]
-        cell.userInteractionEnabled = true
+        cell.menuOptionLabel.text = menuActions[indexPath.row]
         
         return cell
     }
@@ -92,25 +100,36 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        hideMenu(false)
-        tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        
-        self.activeViewController = viewControllers?[indexPath.row]
+
     }
     
     // Gesture detector
     
-    @IBAction func onPanContainerView(sender: UIPanGestureRecognizer) {
+    func didTapMenu(sender: UITapGestureRecognizer) {
+        let locationInView = sender.locationInView(self.tableView)
+        if let indexPath = self.tableView.indexPathForRowAtPoint(locationInView) {
+            hideMenu(false)
+            tableView.deselectRowAtIndexPath(indexPath, animated: false)
+            
+            self.activeViewController = viewControllers?[indexPath.row]
+        }
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func didPanView(sender: UIPanGestureRecognizer) {
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
         
         switch sender.state {
         
         case .Began:
-            originalMenuViewCenter = self.menuView.center
+            self.originalMenuViewCenter = self.tableView.center
         
         case .Changed:
-            self.menuView.center.x = min(self.originalMenuViewCenter!.x + translation.x, self.maxX!)
+            self.tableView.center.x = min(self.originalMenuViewCenter!.x + translation.x, self.maxX!)
 
         case .Ended:
             if velocity.x > 0 {
@@ -128,9 +147,8 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         let timeInterval = animated ? 0.4 : 0
         
         UIView.animateWithDuration(timeInterval, animations: {
-            self.menuView.center.x = self.maxX!
-            self.menuView.alpha = 1
-            self.menuView.userInteractionEnabled = true
+            self.tableView.center.x = self.maxX!
+            self.tableView.alpha = 0.8
             
             self.view.layoutIfNeeded()
         })
@@ -140,9 +158,8 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         let timeInterval = animated ? 0.4 : 0
         
         UIView.animateWithDuration(timeInterval, animations: {
-            self.menuView.center.x = self.minX!
-            self.menuView.alpha = 0
-            self.menuView.userInteractionEnabled = false
+            self.tableView.center.x = self.minX!
+            self.tableView.alpha = 0
             
             self.view.layoutIfNeeded()
         })
