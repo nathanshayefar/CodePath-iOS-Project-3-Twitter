@@ -61,9 +61,11 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
             
         case .Home:
             TwitterClient.sharedInstance.homeTimeline(completion)
+            self.navigationItem.title = "Home"
         
         case .Mentions:
             TwitterClient.sharedInstance.mentionsTimeline(completion)
+            self.navigationItem.title = "Mentions"
         }
     }
     

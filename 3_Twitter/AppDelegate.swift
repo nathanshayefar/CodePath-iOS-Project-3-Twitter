@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Go to logged-in screen
             println("Current user detected: \(User.currentUser?.name)")
             
-            var vc = storyboard.instantiateViewControllerWithIdentifier("LoggedInNavController") as! UIViewController
+            var vc = storyboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as! UIViewController
             window?.rootViewController = vc
         }
         

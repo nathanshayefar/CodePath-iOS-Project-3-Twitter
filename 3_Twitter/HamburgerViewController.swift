@@ -8,12 +8,13 @@
 
 import UIKit
 
-class HamburgerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    @IBOutlet private weak var tableView: UITableView!
+class HamburgerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var menuView: UITableView!
     
+    private let tweetDetailSegueId = "tweetDetailSegue"
     private let composeSegueId = "composeSegue"
+    private let profileSegueId = "profileSegue"
     
     private var originalMenuViewCenter: CGPoint?
     private var minX: CGFloat?
@@ -21,6 +22,7 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
     
     private var menuActions = ["Profile", "Home", "Mentions"]
     
+    private var navigationViewController: UINavigationController?
     private var viewControllers: [UIViewController]?
     
     override func viewDidLoad() {
@@ -31,15 +33,7 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         self.menuView.dataSource = self
         self.menuView.delegate = self
         self.menuView.layer.zPosition = 1
-        
-        self.navigationItem.title = "Profile"
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        navigationController?.navigationBar.barTintColor = NBSColor.primaryColor
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        navigationController?.navigationBar.backgroundColor = NBSColor.primaryColor
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .Plain, target: self, action: "onSignOutButton")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .Plain, target: self, action: "onNewButton")
+        self.menuView.userInteractionEnabled = true
         
         self.minX = -menuView.bounds.width / 2
         self.maxX = menuView.bounds.width / 2
@@ -48,19 +42,20 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func initializeViewControllers() {
-        // Storyboarding
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         let profileViewController = storyboard.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
         profileViewController.setUser(User.currentUser!)
         
-        let homeTimelineViewController = storyboard.instantiateViewControllerWithIdentifier("HomeTimelineViewController") as!HomeTimelineViewController
-        homeTimelineViewController.setTimelineType(TimelineType.Home)
+        let homeTimelineNavigationController = storyboard.instantiateViewControllerWithIdentifier("TimelineNavigationController") as! TwitterNavigationController
+        let homeVC = homeTimelineNavigationController.viewControllers[0] as! HomeTimelineViewController
+        homeVC.setTimelineType(TimelineType.Home)
         
-        let mentionsViewController = storyboard.instantiateViewControllerWithIdentifier("HomeTimelineViewController") as! HomeTimelineViewController
-        mentionsViewController.setTimelineType(TimelineType.Mentions)
+        let mentionsTimelineNavigationController = storyboard.instantiateViewControllerWithIdentifier("TimelineNavigationController") as! TwitterNavigationController
+        let mentionsVC = mentionsTimelineNavigationController.viewControllers[0] as! HomeTimelineViewController
+        mentionsVC.setTimelineType(TimelineType.Mentions)
         
-        self.viewControllers = [profileViewController, homeTimelineViewController, mentionsViewController]
+        self.viewControllers = [profileViewController, homeTimelineNavigationController, mentionsTimelineNavigationController]
         self.activeViewController = viewControllers?.first
     }
     
@@ -87,6 +82,7 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         let cell = UITableViewCell()
         
         cell.textLabel?.text = menuActions[indexPath.row]
+        cell.userInteractionEnabled = true
         
         return cell
     }
@@ -96,14 +92,14 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.activeViewController = viewControllers?[indexPath.row]
         hideMenu(false)
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        setNavTitle(menuActions[indexPath.row])
+        
+        self.activeViewController = viewControllers?[indexPath.row]
     }
     
     // Gesture detector
-
+    
     @IBAction func onPanContainerView(sender: UIPanGestureRecognizer) {
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
@@ -128,16 +124,13 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    private func setNavTitle(title: String) {
-        self.navigationItem.title = title
-    }
-    
     private func showMenu(animated: Bool) {
         let timeInterval = animated ? 0.4 : 0
         
         UIView.animateWithDuration(timeInterval, animations: {
             self.menuView.center.x = self.maxX!
             self.menuView.alpha = 1
+            self.menuView.userInteractionEnabled = true
             
             self.view.layoutIfNeeded()
         })
@@ -149,18 +142,9 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         UIView.animateWithDuration(timeInterval, animations: {
             self.menuView.center.x = self.minX!
             self.menuView.alpha = 0
+            self.menuView.userInteractionEnabled = false
             
             self.view.layoutIfNeeded()
         })
-    }
-    
-    // MARK: NavigationItem
-    
-    func onSignOutButton() {
-        User.currentUser?.logout()
-    }
-    
-    func onNewButton() {
-        performSegueWithIdentifier(composeSegueId, sender: self)
     }
 }
