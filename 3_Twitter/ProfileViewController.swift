@@ -14,6 +14,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet private weak var followingCountLabel: UILabel!
     @IBOutlet private weak var followerCountLabel: UILabel!
     
+    @IBOutlet private weak var profileImageView: UIImageView!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var screenNameLabel: UILabel!
+    
+    
     private var refreshControl: UIRefreshControl!
     private var user: User?
     private var tweets: [Tweet]?
@@ -39,6 +44,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.insertSubview(refreshControl, atIndex: 0)
         
+        self.profileImageView.layer.cornerRadius = 3
+        self.profileImageView.clipsToBounds = true
+        
         self.getUserTimeline()
     }
     
@@ -54,6 +62,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             self.tweetCountLabel.text = String(user.tweetCount ?? 0)
             self.followingCountLabel.text = String(user.followingCount ?? 0)
             self.followerCountLabel.text = String(user.followerCount ?? 0)
+            
+            self.profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!)!)
+            self.nameLabel.text = user.name
+            self.screenNameLabel.text = user.screenName
         }
     }
     
