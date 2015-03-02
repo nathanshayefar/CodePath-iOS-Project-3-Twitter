@@ -13,11 +13,13 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var menuView: UITableView!
     
+    private let composeSegueId = "composeSegue"
+    
     private var originalMenuViewCenter: CGPoint?
     private var minX: CGFloat?
     private var maxX: CGFloat?
     
-    private var menuActions = ["Profile", "Home Timeline", "Mentions"]
+    private var menuActions = ["Profile", "Home", "Mentions"]
     
     private var viewControllers: [UIViewController]?
     
@@ -29,6 +31,15 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         self.menuView.dataSource = self
         self.menuView.delegate = self
         self.menuView.layer.zPosition = 1
+        
+        self.navigationItem.title = "Profile"
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        navigationController?.navigationBar.barTintColor = NBSColor.primaryColor
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        navigationController?.navigationBar.backgroundColor = NBSColor.primaryColor
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .Plain, target: self, action: "onSignOutButton")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .Plain, target: self, action: "onNewButton")
         
         self.minX = -menuView.bounds.width / 2
         self.maxX = menuView.bounds.width / 2
@@ -49,7 +60,7 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         let mentionsViewController = storyboard.instantiateViewControllerWithIdentifier("HomeTimelineViewController") as! HomeTimelineViewController
         mentionsViewController.setTimelineType(TimelineType.Mentions)
         
-        viewControllers = [profileViewController, homeTimelineViewController, mentionsViewController]
+        self.viewControllers = [profileViewController, homeTimelineViewController, mentionsViewController]
         self.activeViewController = viewControllers?.first
     }
     
@@ -88,6 +99,7 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         self.activeViewController = viewControllers?[indexPath.row]
         hideMenu(false)
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        setNavTitle(menuActions[indexPath.row])
     }
     
     // Gesture detector
@@ -116,6 +128,10 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
+    private func setNavTitle(title: String) {
+        self.navigationItem.title = title
+    }
+    
     private func showMenu(animated: Bool) {
         let timeInterval = animated ? 0.4 : 0
         
@@ -136,5 +152,15 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
             
             self.view.layoutIfNeeded()
         })
+    }
+    
+    // MARK: NavigationItem
+    
+    func onSignOutButton() {
+        User.currentUser?.logout()
+    }
+    
+    func onNewButton() {
+        performSegueWithIdentifier(composeSegueId, sender: self)
     }
 }

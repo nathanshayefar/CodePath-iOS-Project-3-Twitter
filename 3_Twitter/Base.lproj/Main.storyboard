@@ -402,33 +402,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iYv-xT-EJE">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="G3A-6y-UwW">
-                                <rect key="frame" x="0.0" y="0.0" width="200" height="568"/>
+                                <rect key="frame" x="0.0" y="64" width="200" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="CfR-zr-WTf"/>
                                 </constraints>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iYv-xT-EJE">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="iYv-xT-EJE" secondAttribute="trailing" id="7Sv-b1-9sA"/>
-                            <constraint firstItem="iYv-xT-EJE" firstAttribute="leading" secondItem="VfN-AI-cBC" secondAttribute="leading" id="DrG-r0-CzK"/>
-                            <constraint firstItem="du5-uu-hM7" firstAttribute="top" secondItem="iYv-xT-EJE" secondAttribute="bottom" id="Dy9-hE-gtO"/>
-                            <constraint firstItem="G3A-6y-UwW" firstAttribute="top" secondItem="iYv-xT-EJE" secondAttribute="top" id="I4m-gt-Scj"/>
-                            <constraint firstItem="G3A-6y-UwW" firstAttribute="bottom" secondItem="iYv-xT-EJE" secondAttribute="bottom" id="Yg2-ZG-Ptl"/>
-                            <constraint firstItem="iYv-xT-EJE" firstAttribute="top" secondItem="VfN-AI-cBC" secondAttribute="top" id="p4d-Ao-ENJ"/>
+                            <constraint firstAttribute="trailing" secondItem="iYv-xT-EJE" secondAttribute="trailing" id="7lI-zS-A4q"/>
+                            <constraint firstItem="iYv-xT-EJE" firstAttribute="leading" secondItem="VfN-AI-cBC" secondAttribute="leading" id="IjJ-8h-Ye5"/>
+                            <constraint firstItem="G3A-6y-UwW" firstAttribute="top" secondItem="iYv-xT-EJE" secondAttribute="top" id="OkP-1k-w5K"/>
+                            <constraint firstItem="du5-uu-hM7" firstAttribute="top" secondItem="iYv-xT-EJE" secondAttribute="bottom" id="Te7-Bx-Z1l"/>
+                            <constraint firstItem="iYv-xT-EJE" firstAttribute="top" secondItem="tld-uJ-LAq" secondAttribute="bottom" id="bCf-Xe-RBr"/>
+                            <constraint firstItem="G3A-6y-UwW" firstAttribute="bottom" secondItem="iYv-xT-EJE" secondAttribute="bottom" id="m87-Pd-vG4"/>
                             <constraint firstItem="G3A-6y-UwW" firstAttribute="leading" secondItem="VfN-AI-cBC" secondAttribute="leading" id="ruZ-Ys-Sd0"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="yMi-6P-7mV" appends="YES" id="z08-x2-Ehq"/>
                         </connections>
                     </view>
+                    <navigationItem key="navigationItem" id="BFR-DK-eeD"/>
                     <connections>
                         <outlet property="contentView" destination="iYv-xT-EJE" id="ZsO-1j-WgY"/>
                         <outlet property="menuView" destination="G3A-6y-UwW" id="lEw-mS-pTP"/>
@@ -441,7 +442,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1715" y="-612"/>
+            <point key="canvasLocation" x="2179" y="-528"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="64J-EY-afQ">
@@ -813,7 +814,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="CX0-xY-e3y"/>
+                        <segue destination="tb8-xz-dGV" kind="relationship" relationship="rootViewController" id="QxR-Qx-CmI"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fUj-rA-kMl" userLabel="First Responder" sceneMemberID="firstResponder"/>
