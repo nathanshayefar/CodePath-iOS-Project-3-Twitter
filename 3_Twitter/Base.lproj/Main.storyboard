@@ -165,7 +165,7 @@
         <!--Login View Controller-->
         <scene sceneID="V7m-so-wms">
             <objects>
-                <viewController id="mOP-GI-SkD" customClass="LoginViewController" customModule="__Twitter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="mOP-GI-SkD" customClass="LoginViewController" customModule="__Twitter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="51s-xa-l1O"/>
                         <viewControllerLayoutGuide type="bottom" id="fxb-gJ-sEG"/>
@@ -388,12 +388,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vQy-Fr-Qel" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2210" y="1168"/>
+            <point key="canvasLocation" x="2334" y="1200"/>
         </scene>
         <!--Hamburger View Controller-->
         <scene sceneID="18l-jM-pfI">
             <objects>
-                <viewController id="tb8-xz-dGV" customClass="HamburgerViewController" customModule="__Twitter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HamburgerViewController" id="tb8-xz-dGV" customClass="HamburgerViewController" customModule="__Twitter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tld-uJ-LAq"/>
                         <viewControllerLayoutGuide type="bottom" id="du5-uu-hM7"/>
@@ -404,6 +404,13 @@
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="muz-Zl-8NC" userLabel="containerView">
                                 <rect key="frame" x="-24" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Mek-Nw-E8l">
+                                        <rect key="frame" x="80" y="142" width="160" height="284"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <sections/>
+                                    </tableView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -415,6 +422,7 @@
                     </view>
                     <connections>
                         <outlet property="containerView" destination="muz-Zl-8NC" id="1rB-9u-clw"/>
+                        <outlet property="tableView" destination="Mek-Nw-E8l" id="TKw-3F-RzC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wON-FP-bpC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -429,7 +437,7 @@
         <!--Profile View Controller-->
         <scene sceneID="64J-EY-afQ">
             <objects>
-                <viewController id="fhc-0r-HwZ" customClass="ProfileViewController" customModule="__Twitter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" id="fhc-0r-HwZ" customClass="ProfileViewController" customModule="__Twitter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xhE-7T-7G7"/>
                         <viewControllerLayoutGuide type="bottom" id="5pG-eh-aQk"/>
@@ -714,12 +722,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6gI-fz-TOd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2484" y="-443"/>
+            <point key="canvasLocation" x="2766" y="-429"/>
         </scene>
         <!--Compose View Controller-->
         <scene sceneID="mlK-Ql-tpc">
             <objects>
-                <viewController id="ba3-87-L6R" customClass="ComposeViewController" customModule="__Twitter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ComposeViewController" id="ba3-87-L6R" customClass="ComposeViewController" customModule="__Twitter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dCL-2K-5tg"/>
                         <viewControllerLayoutGuide type="bottom" id="Fgc-q5-Vx6"/>
