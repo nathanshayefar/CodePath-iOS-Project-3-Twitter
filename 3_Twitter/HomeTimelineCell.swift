@@ -8,6 +8,7 @@
 
 protocol HomeTimelineCellDelegate : class {
     func didReply(homeTimelineCell: HomeTimelineCell)
+//    func didTapProfileImage(homeTimelineCell: HomeTimelineCell)
 }
 
 class HomeTimelineCell: UITableViewCell {
@@ -25,7 +26,7 @@ class HomeTimelineCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.backgroundColor = Color.secondaryColor
+        self.backgroundColor = NBSColor.secondaryColor
         
         // Set up buttons
         self.retweetButton.setImage(UIImage(named: "retweet_default") as UIImage?, forState: .Normal)

@@ -47,7 +47,7 @@ class Tweet {
             isFavorited = (favorited == 1)
         }
         
-        timeStringSinceCreation = Time.timeStringSinceCreation(createdAt)
+        timeStringSinceCreation = NBSTime.timeStringSinceCreation(createdAt)
     }
     
     class func tweetsWithArray(array: [NSDictionary]) -> [Tweet] {

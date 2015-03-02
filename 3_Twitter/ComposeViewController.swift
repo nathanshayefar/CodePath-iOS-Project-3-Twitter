@@ -25,8 +25,8 @@ class ComposeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Color.secondaryColor
-        self.bodyTextField.backgroundColor = Color.secondaryColor
+        self.view.backgroundColor = NBSColor.secondaryColor
+        self.bodyTextField.backgroundColor = NBSColor.secondaryColor
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "onCancel")
         
@@ -38,9 +38,9 @@ class ComposeViewController: UIViewController {
         
         self.navigationItem.title = "Compose"
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        navigationController?.navigationBar.barTintColor = Color.primaryColor
+        navigationController?.navigationBar.barTintColor = NBSColor.primaryColor
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        navigationController?.navigationBar.backgroundColor = Color.primaryColor
+        navigationController?.navigationBar.backgroundColor = NBSColor.primaryColor
         
         profileImageView.setImageWithURL(NSURL(string: User.currentUser!.profileImageUrl!))
         realNameLabel.text = User.currentUser!.name

@@ -10,6 +10,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     private let homeTimelineCellId = "HomeTimelineCell"
     private let tweetDetailSegueId = "tweetDetailSegue"
     private let composeSegueId = "composeSegue"
+    private let profileSegueId = "profileSegue"
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -23,13 +24,13 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
         self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 85
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.backgroundColor = Color.secondaryColor
+        self.tableView.backgroundColor = NBSColor.secondaryColor
         
         self.navigationItem.title = "Home"
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        navigationController?.navigationBar.barTintColor = Color.primaryColor
+        navigationController?.navigationBar.barTintColor = NBSColor.primaryColor
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        navigationController?.navigationBar.backgroundColor = Color.primaryColor
+        navigationController?.navigationBar.backgroundColor = NBSColor.primaryColor
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .Plain, target: self, action: "onSignOutButton")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .Plain, target: self, action: "onNewButton")
@@ -116,6 +117,11 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     func didReply(homeTimelineCell: HomeTimelineCell) {
         performSegueWithIdentifier(composeSegueId, sender: self)
     }
+    
+    @IBAction func didTapProfileImage(sender: UITapGestureRecognizer) {
+        performSegueWithIdentifier(profileSegueId, sender: self)
+    }
+    
     
     // MARK: ComposeViewControllerDelegate
     

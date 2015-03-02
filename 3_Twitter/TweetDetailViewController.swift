@@ -26,7 +26,7 @@ class TweetDetailViewController: UIViewController {
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reply", style: .Plain, target: self, action: "onReply")
         
-        self.view.backgroundColor = Color.secondaryColor
+        self.view.backgroundColor = NBSColor.secondaryColor
         self.bodyLabel.preferredMaxLayoutWidth = self.bodyLabel.frame.size.width
         
         // Set up buttons

@@ -16,9 +16,9 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Color.secondaryColor
+        self.view.backgroundColor = NBSColor.secondaryColor
         
-        self.loginButton.backgroundColor = Color.primaryColor
+        self.loginButton.backgroundColor = NBSColor.primaryColor
         self.loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.loginButton.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
         self.loginButton.layer.cornerRadius = 3
