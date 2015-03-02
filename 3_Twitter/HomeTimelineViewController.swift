@@ -25,6 +25,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
         self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 85
         self.tableView.rowHeight = UITableViewAutomaticDimension
+
         self.tableView.backgroundColor = NBSColor.secondaryColor
         
         self.navigationItem.title = "Home"
@@ -57,11 +58,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: TableView
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let count = tweets?.count {
-            return count
-        } else {
-            return 0
-        }
+        return tweets?.count ?? 0
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -95,15 +92,11 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
             vc.delegate = self
             
         case profileSegueId:
-            println(profileSegueId)
             let locationInView = sender!.locationInView(self.tableView)
-                println(locationInView)
-                if let indexPath = self.tableView.indexPathForRowAtPoint(locationInView) {
-                    println(indexPath.row)
-                    let vc = segue.destinationViewController as! ProfileViewController
-                    vc.setUser(tweets![indexPath.row].user!)
-                }
-            println("boom shack")
+            if let indexPath = self.tableView.indexPathForRowAtPoint(locationInView) {
+                let vc = segue.destinationViewController as! ProfileViewController
+                vc.setUser(tweets![indexPath.row].user!)
+            }
             
         default:
             return
@@ -135,7 +128,6 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     @IBAction func didTapProfileImage(sender: UITapGestureRecognizer) {
         performSegueWithIdentifier(profileSegueId, sender: sender)
     }
-    
     
     // MARK: ComposeViewControllerDelegate
     
