@@ -9,17 +9,17 @@
 class TweetDetailViewController: UIViewController {
     private let detailToComposeSegueID = "detailToComposeSegue"
     
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var realNameLabel: UILabel!
-    @IBOutlet weak var screenNameLabel: UILabel!
-    @IBOutlet weak var bodyLabel: UILabel!
-    @IBOutlet weak var timestampLabel: UILabel!
-    @IBOutlet weak var retweetLabel: UILabel!
-    @IBOutlet weak var favoriteLabel: UILabel!
-    @IBOutlet weak var retweetButton: UIButton!
-    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet private weak var profileImageView: UIImageView!
+    @IBOutlet private weak var realNameLabel: UILabel!
+    @IBOutlet private weak var screenNameLabel: UILabel!
+    @IBOutlet private weak var bodyLabel: UILabel!
+    @IBOutlet private weak var timestampLabel: UILabel!
+    @IBOutlet private weak var retweetLabel: UILabel!
+    @IBOutlet private weak var favoriteLabel: UILabel!
+    @IBOutlet private weak var retweetButton: UIButton!
+    @IBOutlet private weak var favoriteButton: UIButton!
     
-    var tweet: Tweet?
+    private var tweet: Tweet?
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -11,13 +11,14 @@ protocol ComposeViewControllerDelegate : class {
 }
 
 class ComposeViewController: UIViewController {
-    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet private weak var profileImageView: UIImageView!
     
-    @IBOutlet weak var realNameLabel: UILabel!
-    @IBOutlet weak var screenNameLabel: UILabel!
-    @IBOutlet weak var bodyTextField: UITextField!
+    @IBOutlet private weak var realNameLabel: UILabel!
+    @IBOutlet private weak var screenNameLabel: UILabel!
+    @IBOutlet private weak var bodyTextField: UITextField!
     
     weak var delegate: ComposeViewControllerDelegate?
+    
     private var tweet: Tweet?
     private var remainingCharactersButton: UIBarButtonItem?
     private let maximumCharacters = 140

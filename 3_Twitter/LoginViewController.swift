@@ -11,7 +11,7 @@ import UIKit
 class LoginViewController: UIViewController {
     private let loginSegueId = "loginSegue"
 
-    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet private weak var loginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()

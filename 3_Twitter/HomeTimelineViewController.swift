@@ -12,10 +12,10 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     private let composeSegueId = "composeSegue"
     private let profileSegueId = "profileSegue"
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
-    var refreshControl: UIRefreshControl!
-    var tweets: [Tweet]?
+    private var refreshControl: UIRefreshControl!
+    private var tweets: [Tweet]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
