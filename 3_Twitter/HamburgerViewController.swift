@@ -6,13 +6,16 @@
 //  Copyright (c) 2015 Nathan Shayefar. All rights reserved.
 //
 
+import UIKit
+
 class HamburgerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var contentView: UIView!
+    @IBOutlet private weak var menuView: UITableView!
     
-    private var originalContainerViewCenter: CGPoint?
-    private var containerViewMinRightCenter: CGPoint?
-    private var containerViewMaxRightCenter: CGPoint?
+    private var originalMenuViewCenter: CGPoint?
+    private var minX: CGFloat?
+    private var maxX: CGFloat?
     
     private var viewControllers: [UIViewController]?
     
@@ -22,28 +25,19 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
         // Storyboarding
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let profileViewController = storyboard.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        profileViewController.setUser(User.currentUser!)
         let homeTimelineViewController = storyboard.instantiateViewControllerWithIdentifier("HomeTimelineViewController") as!HomeTimelineViewController
         let mentionsViewController = storyboard.instantiateViewControllerWithIdentifier("TweetDetailViewController") as! TweetDetailViewController
         viewControllers = [profileViewController, homeTimelineViewController, mentionsViewController]
         self.activeViewController = viewControllers?.first
         
+        self.menuView.dataSource = self
+        self.menuView.delegate = self
         
+        self.minX = -menuView.bounds.width / 2
+        self.maxX = menuView.bounds.width / 2
         
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-
-        self.containerViewMinRightCenter = CGPoint(x: -containerView.bounds.width, y: view.center.y)
-        self.containerViewMaxRightCenter = CGPoint(x: containerView.bounds.width / 2, y: view.center.y)
-        
-        self.containerView.center = self.containerViewMinRightCenter!
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        hideMenu(false)
     }
     
     var activeViewController: UIViewController? {
@@ -55,37 +49,80 @@ class HamburgerViewController: UIViewController, UITableViewDataSource, UITableV
             }
             if let newViewController = activeViewController {
                 self.addChildViewController(newViewController)
-                self.view.bounds = self.containerView.bounds
-                self.view.autoresizingMask = .FlexibleWidth | .FlexibleHeight
-                self.containerView.addSubview(newViewController.view)
+                self.view.frame = self.contentView.bounds
+//                self.view.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+                self.contentView.addSubview(newViewController.view)
                 newViewController.didMoveToParentViewController(self)
             }
         }
     }
+    
+    // TableView
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        
+        cell.textLabel?.text = "Goat"
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.activeViewController = viewControllers?[indexPath.row]
+        hideMenu(false)
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+    }
+    
+    // Gesture detector
 
     @IBAction func onPanContainerView(sender: UIPanGestureRecognizer) {
+        
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
         
         switch sender.state {
+        
         case .Began:
-            println("began")
-            
-            originalContainerViewCenter = self.containerView.center
+            originalMenuViewCenter = self.menuView.center
+        
         case .Changed:
-            println("changed")
-            
-            containerView.center = CGPoint(x: self.originalContainerViewCenter!.x + translation.x, y: self.originalContainerViewCenter!.y)
+            self.menuView.center.x = min(self.originalMenuViewCenter!.x + translation.x, self.maxX!)
+
         case .Ended:
-            println("ended")
-            
             if velocity.x > 0 {
-                containerView.center = self.containerViewMaxRightCenter!
+                self.showMenu(true)
             } else {
-                containerView.center = self.containerViewMinRightCenter!
+                self.hideMenu(true)
             }
+        
         default:
-            println("other action")
+            println("Unhandled pan gesture.")
         }
+    }
+    
+    private func showMenu(animated: Bool) {
+        let timeInterval = animated ? 0.4 : 0
+        
+        UIView.animateWithDuration(timeInterval, animations: {
+            self.menuView.center.x = self.maxX!
+            self.menuView.alpha = 1
+            
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    private func hideMenu(animated: Bool) {
+        let timeInterval = animated ? 0.4 : 0
+        
+        UIView.animateWithDuration(timeInterval, animations: {
+            self.menuView.center.x = self.minX!
+            self.menuView.alpha = 0
+            
+            self.view.layoutIfNeeded()
+        })
     }
 }
