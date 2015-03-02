@@ -42,17 +42,17 @@ class TweetDetailViewController: UIViewController {
         if tweet != nil {
             let user = tweet!.user!
             
-            realNameLabel.text = user.name
-            screenNameLabel.text = "@\(user.screenName!)"
-            profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!))
+            realNameLabel?.text = user.name
+            screenNameLabel?.text = "@\(user.screenName!)"
+            profileImageView?.setImageWithURL(NSURL(string: user.profileImageUrl!))
             
-            timestampLabel.text = tweet!.createdAtString
-            bodyLabel.text = tweet!.text
-            retweetLabel.text = String(tweet!.retweetCount)
-            favoriteLabel.text = String(tweet!.favoritesCount)
+            timestampLabel?.text = tweet!.createdAtString
+            bodyLabel?.text = tweet!.text
+            retweetLabel?.text = String(tweet!.retweetCount)
+            favoriteLabel?.text = String(tweet!.favoritesCount)
             
-            retweetButton.selected = tweet!.isRetweeted!
-            favoriteButton.selected = tweet!.isFavorited!
+            retweetButton?.selected = tweet!.isRetweeted!
+            favoriteButton?.selected = tweet!.isFavorited!
         }
     }
     

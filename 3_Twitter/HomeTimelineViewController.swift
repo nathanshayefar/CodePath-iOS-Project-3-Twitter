@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 Nathan Shayefar. All rights reserved.
 //
 
+let homeTimelineCellId = "HomeTimelineCell"
+
 class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, HomeTimelineCellDelegate, ComposeViewControllerDelegate {
-    private let homeTimelineCellId = "HomeTimelineCell"
     private let tweetDetailSegueId = "tweetDetailSegue"
     private let composeSegueId = "composeSegue"
     private let profileSegueId = "profileSegue"
@@ -79,17 +80,30 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
         switch segue.identifier! {
+        
         case tweetDetailSegueId:
             if let indexPath = self.tableView.indexPathForSelectedRow() {
                 let vc = segue.destinationViewController as! TweetDetailViewController
-                vc.setTweet(tweets![indexPath.row])
+                vc.setTweet(self.tweets![indexPath.row])
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
             }
             
         case composeSegueId:
             let vc = segue.destinationViewController as! ComposeViewController
             vc.delegate = self
+            
+        case profileSegueId:
+            println(profileSegueId)
+            let locationInView = sender!.locationInView(self.tableView)
+                println(locationInView)
+                if let indexPath = self.tableView.indexPathForRowAtPoint(locationInView) {
+                    println(indexPath.row)
+                    let vc = segue.destinationViewController as! ProfileViewController
+                    vc.setUser(tweets![indexPath.row].user!)
+                }
+            println("boom shack")
             
         default:
             return
@@ -119,7 +133,7 @@ class HomeTimelineViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func didTapProfileImage(sender: UITapGestureRecognizer) {
-        performSegueWithIdentifier(profileSegueId, sender: self)
+        performSegueWithIdentifier(profileSegueId, sender: sender)
     }
     
     

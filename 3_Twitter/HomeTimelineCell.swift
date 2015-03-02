@@ -43,22 +43,22 @@ class HomeTimelineCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.bodyLabel.preferredMaxLayoutWidth = self.bodyLabel.frame.size.width
+        self.bodyLabel?.preferredMaxLayoutWidth = self.bodyLabel.frame.size.width
     }
     
     func relayout() {
         if let tweet = self.tweet {
             let user = tweet.user!
             
-            realNameLabel.text = user.name
-            screenNameLabel.text = "@\(user.screenName!)"
-            profileImageView.setImageWithURL(NSURL(string: user.profileImageUrl!))
+            realNameLabel?.text = user.name
+            screenNameLabel?.text = "@\(user.screenName!)"
+            profileImageView?.setImageWithURL(NSURL(string: user.profileImageUrl!))
             
-            timestampLabel.text = tweet.timeStringSinceCreation
-            bodyLabel.text = tweet.text
+            timestampLabel?.text = tweet.timeStringSinceCreation
+            bodyLabel?.text = tweet.text
             
-            retweetButton.selected = tweet.isRetweeted!
-            favoriteButton.selected = tweet.isFavorited!
+            retweetButton?.selected = tweet.isRetweeted!
+            favoriteButton?.selected = tweet.isFavorited!
         }
     }
     

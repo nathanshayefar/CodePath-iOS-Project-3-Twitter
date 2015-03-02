@@ -33,6 +33,19 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         }
     }
     
+    func userTimeline(userID: String, completion: (tweets: [Tweet]?, error: NSError?) -> ()) {
+        let params = ["user_id": userID]
+        
+        GET("1.1/statuses/user_timeline.json", parameters: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            
+            var tweets = Tweet.tweetsWithArray(response as! [NSDictionary])
+            completion(tweets: tweets, error: nil)
+            
+            }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                completion(tweets: nil, error: error)
+        }
+    }
+    
     func postTweet(status: String) {
         let params = ["status": status]
         
@@ -73,6 +86,7 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
         }
     }
     
+    // TODO: This is not the correct endpoint action
     func unretweet(tweetID: String) {
         let params = ["id": tweetID]
         
