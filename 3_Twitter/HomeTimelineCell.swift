@@ -21,15 +21,9 @@ class HomeTimelineCell: UITableViewCell {
     
     private var tweet: Tweet?
     weak var delegate: HomeTimelineCellDelegate?
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    override init() {
-        super.init()
-        
-        println("wakey")
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
         
         self.backgroundColor = NBSColor.secondaryColor
         
@@ -46,27 +40,6 @@ class HomeTimelineCell: UITableViewCell {
         
         relayout()
     }
-
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//        
-//        println("wakey")
-//        
-//        self.backgroundColor = NBSColor.secondaryColor
-//        
-//        // Set up buttons
-//        self.retweetButton.setImage(UIImage(named: "retweet_default") as UIImage?, forState: .Normal)
-//        self.retweetButton.setImage(UIImage(named: "retweet_enabled") as UIImage?, forState: .Selected)
-//        self.favoriteButton.setImage(UIImage(named: "favorite_default") as UIImage?, forState: .Normal)
-//        self.favoriteButton.setImage(UIImage(named: "favorite_enabled") as UIImage?, forState: .Selected)
-//        
-//        // Update views
-//        self.profileImageView.layer.cornerRadius = 3
-//        self.profileImageView.clipsToBounds = true
-//        self.bodyLabel.preferredMaxLayoutWidth = self.bodyLabel.frame.size.width
-//        
-//        relayout()
-//    }
 
     override func layoutSubviews() {
         super.layoutSubviews()

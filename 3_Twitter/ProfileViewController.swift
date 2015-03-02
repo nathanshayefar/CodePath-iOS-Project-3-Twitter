@@ -25,6 +25,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.tableView.delegate = self
         self.tableView.estimatedRowHeight = 85
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        
         self.tableView.backgroundColor = NBSColor.secondaryColor
         
         self.navigationItem.title = "Profile"
@@ -43,6 +44,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func setUser(user: User) {
         self.user = user
+        println(user.backgroundImageUrl)
     }
     
     func relayout() {
@@ -60,8 +62,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             self.refreshControl.beginRefreshing()
             
             TwitterClient.sharedInstance.userTimeline(userID, completion: { (tweets, error) -> () in
-                println("tweets: \(tweets)")
-                println("error: \(error)")
                 self.tweets = tweets
                 self.tableView.reloadData()
                 self.relayout()
